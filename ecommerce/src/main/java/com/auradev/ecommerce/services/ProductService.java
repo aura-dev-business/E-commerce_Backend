@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.sql.rowset.Predicate;
+import jakarta.persistence.criteria.Predicate;
 
 @Service
 public class ProductService {
@@ -57,19 +57,19 @@ public class ProductService {
             List<Predicate> predicates = new ArrayList<>();
 
             if (minPrice != null) {
-                predicates.add((Predicate) criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
             }
             if (maxPrice != null) {
-                predicates.add((Predicate) criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
             }
             if (categoryId != null) {
-                predicates.add((Predicate) criteriaBuilder.equal(root.get("category").get("id"), categoryId));
+                predicates.add(criteriaBuilder.equal(root.get("category").get("id"), categoryId));
             }
             if (inStock != null) {
-                predicates.add((Predicate) criteriaBuilder.greaterThan(root.get("stockQuantity"), 0));
+                predicates.add(criteriaBuilder.greaterThan(root.get("stockQuantity"), 0));
             }
 
-            return criteriaBuilder.and((jakarta.persistence.criteria.Predicate[]) predicates.toArray(new Predicate[0]));
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
     }
 }
